@@ -1,6 +1,7 @@
 ### Reflect ORM 
 
 [![reflect-orm](https://github.com/WolvenSpirit/reflect-orm/actions/workflows/go.yml/badge.svg)](https://github.com/WolvenSpirit/reflect-orm/actions/workflows/go.yml)
+[![codecov](https://codecov.io/gh/WolvenSpirit/reflect-orm/branch/main/graph/badge.svg?token=jRo6ihbSNu)](https://codecov.io/gh/WolvenSpirit/reflect-orm)
 
 Minimal proof of concept for an object relational mapper that can map data from tables without having to interact with the database beforehand.
 
