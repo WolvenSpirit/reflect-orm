@@ -1,5 +1,7 @@
 ### Reflect ORM 
 
+[![reflect-orm](https://github.com/WolvenSpirit/reflect-orm/actions/workflows/go.yml/badge.svg)](https://github.com/WolvenSpirit/reflect-orm/actions/workflows/go.yml)
+
 Minimal proof of concept for an object relational mapper that can map data from tables without having to interact with the database beforehand.
 
 It works by providing a `struct` that describes what is believed to be the data in the table.
