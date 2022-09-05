@@ -29,7 +29,7 @@ func connectDB(user, pass, host, database, sslMode string) {
 
 // Define your table data, the struct doesn't need to be comprehensive
 type Users struct {
-	Id          int64
+    Id          int64
     Name        string
     Email       string
     // ...
@@ -41,11 +41,11 @@ func init() {
 
 func main() {
     // We use 'users' as our table definition
-	var users Users
+    var users Users
     // To be explicit regarding what is returned we define the result beforehand
     var result []Users
     // Get the users from the table
-	result = Get(users, nil)
+    result = Get(users, nil)
     // That's it!
     fmt.Println(result)
 }
