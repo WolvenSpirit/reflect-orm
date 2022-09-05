@@ -29,25 +29,8 @@ type CacheResult[T interface{}] struct {
 }
 
 /*
-func memoise[T interface{}, F func(db *sql.DB, model T, where []string) (T, error)](db *sql.DB, v T, where []string, actualFunc F, useCache bool) (T, error) {
-	if !useCache {
-		return actualFunc(db, v, where)
-
-	}
-	t := reflect.TypeOf(v).String()
-	h := strings.Join(where, "")
-	hash := t + h
-	sv, ok := store.Load(hash)
-	if ok {
-		return sv.(T), nil
-	}
-	var cr CacheResult[T]
-	cr.Result, cr.Error = actualFunc(db, v, where)
-	store.Store(hash, cr)
-	return cr.Result, cr.Error
-}
+MapFields attempts to map each row data as an instance of type T
 */
-
 func MapFields[T interface{}](rows *sql.Rows, v T, rawValues []interface{}) T {
 	names, _ := rows.ColumnTypes()
 	t := reflect.TypeOf(v)
@@ -69,12 +52,15 @@ func MapFields[T interface{}](rows *sql.Rows, v T, rawValues []interface{}) T {
 		if sf.Type == typeOfVal && sf.Name == name && sv.CanAddr() {
 			sv.Set(reflect.ValueOf(m[name]))
 		} else {
-			fmt.Println("!!", sf.Type, typeOfVal)
+			fmt.Println("!! mismatch ", sf.Type, typeOfVal)
 		}
 	}
 	return v
 }
 
+/*
+Get constructs the query from the provided definition struct, performs the query and attempts to call MapFields for each row returned.
+*/
 func Get[T interface{}](db *sql.DB, model T, where []string) (rows []T, err error) {
 	var modelName string
 	var fields []string

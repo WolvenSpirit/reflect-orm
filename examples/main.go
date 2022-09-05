@@ -1,4 +1,4 @@
-package reflectorm
+package main
 
 import (
 	"database/sql"
@@ -42,7 +42,6 @@ func MapFields[T interface{}](rows *sql.Rows, v T, rawValues []interface{}) T {
 	m := make(map[string]interface{}, nf)
 	// Assuming rawValues are returned consistently, in the same order as the names
 	for k := range names {
-		// fmt.Printf("matching %s %s\n", names[k].Name(), *rawValues[k].(*interface{}))
 		m[strings.Title(names[k].Name())] = *rawValues[k].(*interface{})
 	}
 	for k := range names {
@@ -102,7 +101,7 @@ func Get[T interface{}](model T, where []string) (rows []T) {
 		if err != nil {
 			fmt.Println(err.Error())
 		}
-		//fmt.Println("result", names)
+
 		rws.Scan(values...)
 		t = MapFields[T](rws, t, values)
 		fmt.Printf("%+v", t)
@@ -114,33 +113,6 @@ func Get[T interface{}](model T, where []string) (rows []T) {
 
 func main() {
 	connectDB("postgres", "", "localhost:5432", "shared_db01", "disable")
-	/*rows, err := db.Query(`select
-	id, publisher, channel, consumer,
-	ack, data, created, duration, completed
-	 from notify_events`)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	var results []TT
-	for rows.Next() {
-		t := TT{}
-		names, err := rows.Columns()
-
-		columns := make([]interface{}, len(names))
-		values := make([]interface{}, len(names))
-		for k := range names {
-			values[k] = &columns[k]
-		}
-
-		if err != nil {
-			fmt.Println(err.Error())
-		}
-		//fmt.Println("result", names)
-		rows.Scan(values...)
-		t = MapFields[TT](rows, t, values)
-		fmt.Printf("%+v", t)
-		results = append(results, t)
-	}*/
 	var tt notify_events
 	Get(tt, nil)
 }
