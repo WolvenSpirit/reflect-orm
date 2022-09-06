@@ -46,7 +46,7 @@ func main() {
     // To be explicit regarding what is returned we define the result beforehand
     var result []Users
     // Get the users from the table
-    result = Get(users, nil)
+    result = Get(db, users, nil)
     // That's it!
     fmt.Println(result)
 }
